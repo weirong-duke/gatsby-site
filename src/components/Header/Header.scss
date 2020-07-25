@@ -1,0 +1,36 @@
+.Header {
+  align-items: center;
+  color: #DDD;
+  display: flex;
+  flex-direction: row;
+  height: 150px;
+  mix-blend-mode: difference;
+  padding: 20px 50px;
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  h1 {
+    align-items: center;
+    display: flex;
+    height: 150px;
+    flex-direction: row;
+
+    .title {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-left: 12px;
+      &__main {
+        font-size: 28px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      &__subtitle {
+        font-size: 16px;
+        font-weight: 200;
+      }
+    }
+  }
+}
