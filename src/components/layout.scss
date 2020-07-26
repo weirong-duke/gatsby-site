@@ -12,10 +12,20 @@
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
-      padding: 0 150px;
+      padding: 0 5vw;
       position: relative;
       width: 100%;
 
+      &.first {
+        @media (max-width: 900px) {
+          flex-direction: column;
+          font-size: 14px;
+          .description {
+            max-width: unset;
+            z-index: 10;
+          }
+        }
+      }
       &__links {
         margin-top: 24px;
         a {
@@ -36,12 +46,27 @@
         &.right {
           margin-left: auto;
         }
+        @media (max-width: 1700px) {
+          line-height: 48px;
+          font-size: 48px;
+        }
+        @media (max-width: 900px) {
+          line-height: 24px;
+          font-size: 24px;
+        }
       }
 
       &__subtitle {
         color: #B2B2B2;
         font-size: 24px;
         margin-top: 24px;
+
+        @media (max-width: 1700px) {
+          font-size: 18px;
+        }
+        @media (max-width: 900px) {
+          font-size: 14px;
+        }
       }
       .description {
         align-self: flex-start;
@@ -50,6 +75,8 @@
         max-width: 60%;
         position: sticky;
         top: 150px;
+
+
       }
 
     }
@@ -129,8 +156,16 @@
   .portrait {
     box-shadow: 10px 10px 100px 80px white inset;
     margin-left: auto;
+    padding-top: 100px;
     position: relative;
-    width: 700px;
+    max-width: 900px;
+    min-width: 400px;
+    @media (max-width: 400px) {
+      max-width: 100%;
+    }
+    @media (max-width: 900px) {
+      font-size: 14px;
+    }
     &:before {
       content: '';
       position: absolute;

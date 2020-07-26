@@ -177,7 +177,7 @@ const Layout = ({ children }) => {
         </Helmet>
         <div className="Layout__content">
           <Header siteTitle={data?.site?.siteMetadata?.title} subTitle={data?.site?.siteMetadata?.subTitle}/>
-          <div className="section">
+          <div className="section first">
             <div className="description">
               <div className="section__title first">
                 React Developer and Full Stack Enthusiast
@@ -196,7 +196,7 @@ const Layout = ({ children }) => {
             <div className="portrait" style={{opacity}}>
               <img className="blackwhite" src={blackWhite}/>
             </div>
-          </div>`
+          </div>
 
           <div className="section">
               <div className="section__title right">
