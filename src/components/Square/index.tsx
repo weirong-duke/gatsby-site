@@ -15,18 +15,15 @@ interface SquareProps {
 }
 
 const Square: FC<SquareProps> = ({children, links, image, title}) => {
-  const visitLink = (link: string) => (e: React.MouseEvent) => {
-    e?.preventDefault();
-    window.open(link, "_blank");
-  }
-
   const renderLink = (link: Link): ReactNode => {
     const {href, icon, overlay} = link;
-    return <div className="link" key={href} onClick={visitLink(href)}>
-      {icon}
-      {overlay && <div className="link__overlay">
-        {overlay}
-      </div>}
+    return <div className="link" key={href}>
+      <a href={href} target="_blank">
+        {icon}
+        {overlay && <div className="link__overlay">
+          {overlay}
+        </div>}
+      </a>
     </div>
   }
 

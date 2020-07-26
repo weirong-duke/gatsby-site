@@ -8,13 +8,18 @@ module.exports = {
   },
   plugins: [
     'gatsby-plugin-fontawesome-css',
-    `gatsby-plugin-react-helmet`,
+    {
+      resolve: `gatsby-plugin-favicon`,
+      options: {
+        logo: "assets/images/chenfavi.png",
+      }
+    },
     'gatsby-plugin-sass',
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `assets`,
-        path: `${__dirname}/src/assets`,
+        path: path.join(__dirname, `src`, `assets`),
       },
     },
     {
@@ -52,9 +57,9 @@ module.exports = {
       resolve: "gatsby-plugin-react-svg",
       options: {
         rule: {
-          include: /assets/ // See below to configure properly
-        }
-      }
+          include: /svg/,
+        },
+      },
     },
     {
       resolve: 'gatsby-plugin-web-font-loader',

@@ -2,7 +2,7 @@ import { graphql, useStaticQuery } from "gatsby"
 import Img, { FixedObject} from "gatsby-image"
 import React, {FC} from "react"
 import 'components/Header/Header.scss';
-import Icon from 'assets/images/chen.svg'
+import Icon from 'assets/svg/chen.svg'
 interface HeaderProps {
   siteTitle: string;
   subTitle: string;

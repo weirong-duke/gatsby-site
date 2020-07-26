@@ -1,16 +1,16 @@
-import React, { ReactNode, useState } from "react"
+import React, { ReactNode, useEffect, useState } from "react"
 import InstagramEmbed from 'react-instagram-embed';
 import ReactPlayer from 'react-player/youtube'
-
+import Helmet from 'react-helmet';
 import {FaGithub, FaLink, FaLinkedin, FaFacebook, FaInstagram, FaEnvelope} from 'react-icons/fa';
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
-import BackgroundImage from 'gatsby-background-image'
 import Expandable from 'components/Expandable';
 import Header from "components/Header";
 import Square from 'components/Square';
 import 'assets/styles/helpers.scss';
 import 'assets/styles/styles.css';
+import blackWhite from 'assets/images/blackwhite.png';
 import "components/layout.scss"
 
 const GYM_SQUAT_URL = "https://youtu.be/2gSi5MacPl4"
@@ -21,19 +21,23 @@ const COMP_DEADLIFT_URL = "https://www.instagram.com/p/BlR2rg5AjDo/";
 const COMP_BENCH_URL = "https://www.instagram.com/p/BVLTkcEhv6l/";
 
 const Layout = ({ children }) => {
+  const [opacity, setOpacity] = useState(1);
+
+  useEffect(() => {
+    const onScroll = () => setOpacity(1 - window.scrollY / 650);
+
+    window.addEventListener("scroll", onScroll);
+
+    return function cleanup() {
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
         siteMetadata {
           title
           subTitle
-        }
-      }
-      file(relativePath: { eq: "images/blackwhite.png" }) {
-        childImageSharp {
-          fixed(height:1000) {
-            ...GatsbyImageSharpFixed
-          }
         }
       }
       dlobot: file(relativePath: { eq: "images/dlobot.png" }) {
@@ -114,7 +118,7 @@ const Layout = ({ children }) => {
   }
 
   const renderVideoGameExpandable = () => {
-    return <Expandable image={data.games.childImageSharp.fixed} title="Video Games" top={225}>
+    return <Expandable image={data?.games?.childImageSharp?.fixed} title="Video Games" top={225}>
       <p>
         Gaming has been a part of my life ever since my sister installed Command & Conquer: Red Alert on our home PC when I was 7 (or was I 8?).
         Occasionally I will dabble in a story-driven single player game, but the majority of my playtime is dedicated to both casual and more competitive
@@ -124,19 +128,19 @@ const Layout = ({ children }) => {
         I've always been a fairly competitive person about mundane activities and I will <span className="text-bold">generally</span> be able to end up
         on the down slope of the bell curve of any playerbase (except for Valorant, I am ... trash at Valorant).
       </p>
-      <p>
+      <div className="text-bold" >
         For those who, like me, care:
-        <div className="text-bold game-links" >
+        <p className=" game-links">
           <a href="https://aoe2.net/#profile-76561198002029424" target="_blank">Age of Empires 2: Definitive Edition</a>
           <a href="https://pubg.op.gg/user/CHENWEIRONG" target="_blank">PlayerUnknown's: Battlegrounds</a>
           <a href="https://apex.tracker.gg/profile/pc/chenweirong90" target="_blank">Apex Legends</a>
           <a href="https://cod.tracker.gg/warzone/profile/battlenet/weirong%231752/overview" target="_blank">Call of Duty: Warzone</a>
           <a href="http://www.heroesofnewerth.com/playerstats/ranked/WeiWeiWeiWei" target="_blank">Heroes of Newerth (old school)</a>
 
-        </div>
+        </p>
 
 
-      </p>
+      </div>
 
     </Expandable>
   }
@@ -168,8 +172,11 @@ const Layout = ({ children }) => {
           margin: `0 auto`
         }}
       >
+        <Helmet>
+          <title>Weirong's Site</title>
+        </Helmet>
         <div className="Layout__content">
-          <Header siteTitle={data.site.siteMetadata.title} subTitle={data.site.siteMetadata.subTitle}/>
+          <Header siteTitle={data?.site?.siteMetadata?.title} subTitle={data?.site?.siteMetadata?.subTitle}/>
           <div className="section">
             <div className="description">
               <div className="section__title first">
@@ -186,15 +193,10 @@ const Layout = ({ children }) => {
               </div>
 
             </div>
-
-            <BackgroundImage
-              Tag="div"
-              backgroundColor={`#FFFFFF`}
-              className="portrait"
-              fixed={data.file.childImageSharp.fixed}
-            >
-            </BackgroundImage>
-          </div>
+            <div className="portrait" style={{opacity}}>
+              <img className="blackwhite" src={blackWhite}/>
+            </div>
+          </div>`
 
           <div className="section">
               <div className="section__title right">
@@ -205,7 +207,7 @@ const Layout = ({ children }) => {
           <div className="section">
             <div className="squares">
               <Square
-                image={data.assassin.childImageSharp.fixed}
+                image={data?.assassin?.childImageSharp?.fixed}
                 links={[{
                   href: "https://github.com/weirong-duke/icheatatcodenames",
                   icon: <FaGithub/>
@@ -218,7 +220,7 @@ const Layout = ({ children }) => {
                 Cheating application for the spymaster of the board game Codenames. Just add the words you need to win and voilà!
               </Square>
               <Square
-                image={data.dlobot.childImageSharp.fixed}
+                image={data?.dlobot?.childImageSharp?.fixed}
                 links={[{
                   href: "https://github.com/weirong-duke/dianhaoBot",
                   icon: <FaGithub/>
@@ -277,11 +279,6 @@ const Layout = ({ children }) => {
 
           </div>
         </div>
-        <footer>
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
-        </footer>
         <div className={`overlay ${overlayContent ? 'visible' : ''}`} onClick={() => setOverlayContent(null)}>
           {overlayContent}
         </div>
